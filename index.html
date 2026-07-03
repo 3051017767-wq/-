@@ -1,0 +1,1220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maison Arclay | Interior Architecture</title>
+  <meta name="description" content="Maison Arclay designs quiet, material-led residential interiors with editorial restraint." />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: oklch(94.6% 0.007 82);
+      --surface: oklch(97.7% 0.004 82);
+      --surface-2: oklch(90.8% 0.006 78);
+      --fg: oklch(20.4% 0.012 72);
+      --muted: oklch(43% 0.010 72);
+      --border: oklch(77% 0.007 78);
+      --accent: oklch(24% 0.010 72);
+      --scrim: rgb(18 17 15 / .46);
+      --light: oklch(96.2% 0.005 82);
+      --font-display: "Iowan Old Style", "Iowan Old Style Roman", "Palatino Linotype", "Times New Roman", Georgia, serif;
+      --font-body: "Neue Haas Grotesk Text", "Suisse Int'l", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, ui-monospace, monospace;
+      --ease: cubic-bezier(.16, 1, .3, 1);
+      --max: 1560px;
+      --pad-x: clamp(20px, 4vw, 72px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 2px solid color-mix(in oklch, var(--accent) 72%, white);
+      outline-offset: 4px;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 30;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--pad-x);
+      color: var(--light);
+      border-bottom: 1px solid transparent;
+      transition: background .45s var(--ease), color .45s var(--ease), border-color .45s var(--ease);
+    }
+
+    .site-header.is-solid {
+      background: color-mix(in oklch, var(--bg) 92%, white);
+      color: var(--fg);
+      border-color: color-mix(in oklch, var(--border) 72%, transparent);
+    }
+
+    .nav-inner {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(150px, 1fr) auto minmax(120px, 1fr);
+      align-items: center;
+      gap: 28px;
+    }
+
+    .brand {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: .095em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 3vw, 46px);
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: .075em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      opacity: .86;
+      transition: opacity .25s var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      opacity: 1;
+    }
+
+    .nav-action {
+      justify-self: end;
+    }
+
+    .text-button,
+    .solid-button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid currentColor;
+      border-radius: 0;
+      padding: 0 18px;
+      background: transparent;
+      color: currentColor;
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+    }
+
+    .solid-button {
+      background: var(--accent);
+      color: var(--light);
+      border-color: var(--accent);
+    }
+
+    .text-button:hover,
+    .solid-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .text-button:active,
+    .solid-button:active {
+      transform: translateY(1px);
+    }
+
+    main {
+      overflow: clip;
+    }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--fg);
+      color: var(--light);
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      object-fit: cover;
+      object-position: center center;
+      filter: saturate(.82) contrast(.94);
+      transform: scale(1.04);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgb(17 16 14 / .64) 0%, rgb(17 16 14 / .36) 38%, rgb(17 16 14 / .03) 74%),
+        linear-gradient(180deg, rgb(17 16 14 / .18) 0%, rgb(17 16 14 / .02) 45%, rgb(17 16 14 / .24) 100%);
+    }
+
+    .hero::after {
+      z-index: -1;
+      background: var(--scrim);
+      mix-blend-mode: multiply;
+    }
+
+    .hero-content {
+      width: min(100%, var(--max));
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: clamp(86px, 9vh, 96px) var(--pad-x) clamp(54px, 7vh, 80px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .hero-title {
+      margin: 0;
+      max-width: 8.7ch;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(70px, 13.5vw, 196px);
+      line-height: .84;
+      letter-spacing: -.03em;
+      text-wrap: balance;
+    }
+
+    .hero-lower {
+      align-self: end;
+      display: grid;
+      grid-template-columns: minmax(0, 440px) minmax(180px, 1fr);
+      gap: clamp(28px, 6vw, 120px);
+      align-items: end;
+      padding-left: clamp(0px, 8vw, 178px);
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 30ch;
+      color: color-mix(in oklch, var(--light) 86%, transparent);
+      font-size: clamp(16px, 1.25vw, 19px);
+      line-height: 1.58;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .hero-actions .solid-button {
+      background: var(--light);
+      color: var(--fg);
+      border-color: var(--light);
+    }
+
+    .hero-actions .text-button {
+      color: var(--light);
+      border-color: color-mix(in oklch, var(--light) 70%, transparent);
+      background: rgb(255 255 255 / .08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .section {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: clamp(92px, 13vw, 190px) var(--pad-x);
+    }
+
+    .section.tight-top {
+      padding-top: clamp(72px, 10vw, 132px);
+    }
+
+    .section-kicker {
+      margin: 0 0 26px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .thesis {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
+      gap: clamp(42px, 8vw, 154px);
+      align-items: end;
+    }
+
+    .thesis h2 {
+      margin: 0;
+      max-width: 940px;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(42px, 7.2vw, 112px);
+      line-height: 1.02;
+      letter-spacing: -.025em;
+      text-wrap: balance;
+    }
+
+    .thesis p {
+      margin: 0 0 10px;
+      max-width: 34ch;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.72;
+    }
+
+    .image-band {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .image-band img {
+      width: 100%;
+      height: clamp(520px, 68vw, 860px);
+      object-fit: cover;
+      object-position: center center;
+      filter: saturate(.78) contrast(.98);
+    }
+
+    .image-band figcaption {
+      width: min(100%, var(--max));
+      margin: 16px auto 0;
+      padding: 0 var(--pad-x);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      letter-spacing: .01em;
+    }
+
+    .rooms-head {
+      max-width: 760px;
+      margin: 0 0 clamp(46px, 7vw, 92px) clamp(0px, 8vw, 132px);
+    }
+
+    .rooms-head h2,
+    .materials-copy h2,
+    .method h2,
+    .contact-copy h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(40px, 6vw, 92px);
+      line-height: 1.03;
+      letter-spacing: -.025em;
+      text-wrap: balance;
+    }
+
+    .rooms-head p,
+    .materials-copy p,
+    .method-intro,
+    .contact-copy p {
+      margin: 22px 0 0;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.72;
+    }
+
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(280px, .8fr);
+      grid-template-areas:
+        "large detail"
+        "large portrait";
+      gap: clamp(18px, 2.4vw, 36px);
+      align-items: stretch;
+    }
+
+    .room-card {
+      margin: 0;
+    }
+
+    .room-card.large {
+      grid-area: large;
+    }
+
+    .room-card.detail {
+      grid-area: detail;
+      width: 78%;
+      justify-self: start;
+      align-self: end;
+    }
+
+    .room-card.portrait {
+      grid-area: portrait;
+      align-self: start;
+    }
+
+    .room-card img {
+      height: 100%;
+      min-height: 300px;
+      object-fit: cover;
+      filter: saturate(.80) contrast(.98);
+    }
+
+    .room-card.large img {
+      aspect-ratio: 4 / 5;
+      min-height: 620px;
+    }
+
+    .room-card.detail img {
+      aspect-ratio: 16 / 10;
+      min-height: 240px;
+    }
+
+    .room-card.portrait img {
+      aspect-ratio: 1 / 1;
+      min-height: 360px;
+    }
+
+    .room-card figcaption {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      letter-spacing: .01em;
+    }
+
+    .materials {
+      display: grid;
+      grid-template-columns: minmax(0, .84fr) minmax(320px, .72fr);
+      gap: clamp(36px, 8vw, 126px);
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .materials-image img {
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      filter: saturate(.76) contrast(.98);
+    }
+
+    .material-points {
+      display: grid;
+      gap: 22px;
+      margin: 42px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .material-points li {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .material-points strong {
+      color: var(--fg);
+      font-weight: 520;
+    }
+
+    .method {
+      background: color-mix(in oklch, var(--surface) 78%, var(--bg));
+      border-block: 1px solid var(--border);
+      width: 100%;
+      max-width: none;
+    }
+
+    .method-inner {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: clamp(92px, 13vw, 172px) var(--pad-x);
+    }
+
+    .method-grid {
+      margin-top: clamp(46px, 7vw, 92px);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--border);
+    }
+
+    .method-item {
+      min-height: 252px;
+      padding: clamp(28px, 4vw, 54px) clamp(18px, 3vw, 44px) 24px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .method-item:last-child {
+      border-right: 0;
+      padding-right: 0;
+    }
+
+    .method-item h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(31px, 4vw, 58px);
+      line-height: 1;
+      letter-spacing: -.02em;
+      font-weight: 400;
+    }
+
+    .method-item p {
+      margin: 26px 0 0;
+      max-width: 31ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .contact {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: clamp(92px, 13vw, 180px) var(--pad-x);
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+      gap: clamp(36px, 9vw, 156px);
+      align-items: end;
+      padding-top: clamp(34px, 5vw, 62px);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-copy {
+      max-width: 760px;
+    }
+
+    .contact-action {
+      justify-self: end;
+    }
+
+    .site-footer {
+      display: grid;
+      grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr);
+      align-items: center;
+      gap: 24px;
+      min-height: 82px;
+      padding: 22px var(--pad-x);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .04em;
+    }
+
+    .site-footer strong {
+      color: var(--fg);
+      font-weight: 520;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-self: center;
+    }
+
+    .footer-note {
+      justify-self: end;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgb(18 16 14 / .48);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s var(--ease);
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 70;
+      width: min(520px, 100vw);
+      background: var(--surface);
+      color: var(--fg);
+      transform: translateX(100%);
+      transition: transform .45s var(--ease);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -26px 0 70px rgb(18 16 14 / .22);
+    }
+
+    body.drawer-open .drawer-backdrop {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.drawer-open .drawer {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-header h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+
+    .drawer-header p {
+      margin: 14px 0 0;
+      max-width: 36ch;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .drawer-close {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--fg);
+      font-size: 24px;
+      line-height: 1;
+      transition: transform .25s var(--ease), background .25s var(--ease);
+    }
+
+    .drawer-close:hover {
+      background: var(--surface-2);
+      transform: translateY(-1px);
+    }
+
+    .inquiry-form {
+      display: grid;
+      gap: 18px;
+      padding-top: 28px;
+      overflow: auto;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--fg);
+      font-size: 12px;
+      letter-spacing: .075em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: color-mix(in oklch, var(--surface) 82%, white);
+      color: var(--fg);
+      padding: 12px 13px;
+      outline: 0;
+      transition: border-color .25s var(--ease), background .25s var(--ease);
+    }
+
+    .field textarea {
+      min-height: 116px;
+      resize: vertical;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: color-mix(in oklch, var(--muted) 76%, var(--fg));
+      opacity: .75;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .field small {
+      min-height: 18px;
+      color: oklch(39% .065 34);
+      font-size: 12px;
+    }
+
+    .form-status {
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .75s var(--ease), transform .75s var(--ease);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-media img {
+        animation: heroDrift 14s var(--ease) both;
+      }
+
+      .hero-title,
+      .hero-copy,
+      .hero-actions {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: riseIn .9s var(--ease) forwards;
+      }
+
+      .hero-copy {
+        animation-delay: .16s;
+      }
+
+      .hero-actions {
+        animation-delay: .28s;
+      }
+    }
+
+    @keyframes heroDrift {
+      from {
+        transform: scale(1.07) translate3d(-1.1%, 0, 0);
+      }
+      to {
+        transform: scale(1.04) translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes riseIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 1040px) {
+      .thesis,
+      .materials,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .thesis p,
+      .materials-copy,
+      .contact-action {
+        max-width: 68ch;
+        justify-self: start;
+      }
+
+      .rooms-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "large"
+          "detail"
+          "portrait";
+      }
+
+      .room-card.detail {
+        width: 100%;
+      }
+
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .method-item {
+        min-height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        padding-right: 0;
+      }
+
+      .method-item:last-child {
+        border-bottom: 0;
+      }
+
+      .site-footer {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .footer-links,
+      .footer-note {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .site-header {
+        height: 64px;
+      }
+
+      .nav-inner {
+        grid-template-columns: 1fr auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-action .text-button {
+        min-height: 40px;
+        padding-inline: 12px;
+        font-size: 11px;
+      }
+
+      .hero-content {
+        padding-top: 92px;
+      }
+
+      .hero-title {
+        max-width: 7.6ch;
+        font-size: clamp(64px, 22vw, 92px);
+      }
+
+      .hero-lower {
+        grid-template-columns: 1fr;
+        padding-left: 0;
+        gap: 24px;
+      }
+
+      .hero-actions {
+        justify-content: flex-start;
+      }
+
+      .hero-actions .text-button,
+      .hero-actions .solid-button {
+        flex: 1 1 128px;
+      }
+
+      .section,
+      .method-inner,
+      .contact {
+        padding-block: 76px;
+      }
+
+      .image-band img {
+        height: 72vh;
+        min-height: 420px;
+      }
+
+      .rooms-head {
+        margin-left: 0;
+      }
+
+      .room-card img,
+      .room-card.large img,
+      .room-card.detail img,
+      .room-card.portrait img {
+        min-height: 290px;
+        aspect-ratio: 4 / 5;
+      }
+
+      .material-points li {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .drawer {
+        padding: 20px;
+      }
+
+      .drawer-header h2 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" data-header>
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Maison Arclay home">Maison Arclay</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#rooms">Rooms</a>
+        <a href="#materials">Materials</a>
+        <a href="#method">Method</a>
+        <a href="#contact">Inquire</a>
+      </nav>
+      <div class="nav-action">
+        <button class="text-button" type="button" data-open-drawer>Inquire</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top" aria-label="Maison Arclay interior architecture">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/interior-hero.png" alt="" fetchpriority="high" />
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">Maison Arclay</h1>
+        <div class="hero-lower">
+          <p class="hero-copy">Interior architecture for private homes, edited through light, proportion, and material restraint.</p>
+          <div class="hero-actions" aria-label="Hero actions">
+            <a class="text-button" href="#rooms">View rooms</a>
+            <button class="solid-button" type="button" data-open-drawer>Inquire</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section thesis reveal" aria-labelledby="thesis-title">
+      <div>
+        <p class="section-kicker">Studio thesis</p>
+        <h2 id="thesis-title">A home should feel composed before it is decorated.</h2>
+      </div>
+      <p>We work with private rooms that need fewer statements and stronger decisions: the right opening, the right shadow, the right material left alone.</p>
+    </section>
+
+    <figure class="image-band reveal" aria-label="Full-width interior room study">
+      <img src="assets/selected-room.png" alt="Dining room with a sculptural stair, linen curtains, oak table, and soft architectural light." loading="lazy" />
+      <figcaption>Garden dining room, private residence.</figcaption>
+    </figure>
+
+    <section class="section tight-top" id="rooms" aria-labelledby="rooms-title">
+      <div class="rooms-head reveal">
+        <h2 id="rooms-title">Rooms with a slower pulse.</h2>
+        <p>Each commission begins with atmosphere, then becomes architecture: openings, volumes, stone, timber, and the space between them.</p>
+      </div>
+      <div class="rooms-grid">
+        <figure class="room-card large reveal">
+          <img src="assets/interior-hero.png" alt="Quiet living room with linen curtains, low seating, stone floor, and dark timber storage." loading="lazy" />
+          <figcaption>Living room planned around morning shade and low conversation.</figcaption>
+        </figure>
+        <figure class="room-card detail reveal">
+          <img src="assets/material-detail.png" alt="Travertine, plaster, wood veneer, and linen held in warm side light." loading="lazy" />
+          <figcaption>Material register before procurement.</figcaption>
+        </figure>
+        <figure class="room-card portrait reveal">
+          <img src="assets/selected-room.png" alt="Warm dining area with timber chairs, curved stair, stone floor, and sheer drapery." loading="lazy" />
+          <figcaption>Dining volume edited for light, threshold, and proportion.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section materials" id="materials" aria-labelledby="materials-title">
+      <div class="materials-image reveal">
+        <img src="assets/material-detail.png" alt="Close material composition of stone, plaster, linen, wood, and a dark ceramic bowl." loading="lazy" />
+      </div>
+      <div class="materials-copy reveal">
+        <p class="section-kicker">Material register</p>
+        <h2 id="materials-title">Selected for the way they age in light.</h2>
+        <p>Our palette is narrow by design. Stone, timber, plaster, linen, and shadow carry more depth than a room full of decorative gestures.</p>
+        <ul class="material-points" aria-label="Material priorities">
+          <li><strong>Stone</strong><span>Honed or brushed, with enough variation to keep the room alive.</span></li>
+          <li><strong>Timber</strong><span>Used as volume, threshold, and weight rather than surface ornament.</span></li>
+          <li><strong>Textile</strong><span>Linen, wool, and boucle selected for filtration, weight, and quiet touch.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="method" id="method" aria-labelledby="method-title">
+      <div class="method-inner">
+        <div class="reveal">
+          <h2 id="method-title">The work is mostly removal.</h2>
+          <p class="method-intro">Every commission is edited until the home can hold daily life without visual noise.</p>
+        </div>
+        <div class="method-grid">
+          <article class="method-item reveal">
+            <h3>Listen</h3>
+            <p>We map the rituals already in the home: morning routes, rooms that gather people, and corners that never quite work.</p>
+          </article>
+          <article class="method-item reveal">
+            <h3>Reduce</h3>
+            <p>Plans are narrowed to the decisions that change how the room feels: a moved wall, a corrected opening, a quieter palette.</p>
+          </article>
+          <article class="method-item reveal">
+            <h3>Place</h3>
+            <p>Furniture, stone, timber, and textiles are placed for touch, age, and proportion rather than novelty.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-panel reveal">
+        <div class="contact-copy">
+          <h2 id="contact-title">Begin with the room that will not settle.</h2>
+          <p>Share the address, the rooms in scope, and what feels unresolved. We will reply with the right next conversation.</p>
+        </div>
+        <div class="contact-action">
+          <button class="solid-button" type="button" data-open-drawer>Inquire</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <strong>Maison Arclay</strong>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#rooms">Rooms</a>
+      <a href="#materials">Materials</a>
+      <a href="#method">Method</a>
+    </nav>
+    <span class="footer-note">Private residential interiors.</span>
+  </footer>
+
+  <div class="drawer-backdrop" data-close-drawer></div>
+  <aside class="drawer" aria-hidden="true" aria-labelledby="drawer-title" role="dialog" data-drawer>
+    <div class="drawer-header">
+      <div>
+        <h2 id="drawer-title">Private consultation</h2>
+        <p>Tell us what needs to change. The first reply will be practical and specific.</p>
+      </div>
+      <button class="drawer-close" type="button" aria-label="Close consultation form" data-close-drawer>&times;</button>
+    </div>
+    <form class="inquiry-form" novalidate data-inquiry-form>
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
+        <small data-error-for="name"></small>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+        <small data-error-for="email"></small>
+      </div>
+      <div class="field">
+        <label for="location">Project location</label>
+        <input id="location" name="location" autocomplete="street-address" placeholder="City or neighborhood" />
+        <small data-error-for="location"></small>
+      </div>
+      <div class="field">
+        <label for="scope">Rooms in scope</label>
+        <select id="scope" name="scope" required>
+          <option value="">Choose one</option>
+          <option>Primary residence</option>
+          <option>Apartment or pied-a-terre</option>
+          <option>Single room</option>
+          <option>Hospitality space</option>
+        </select>
+        <small data-error-for="scope"></small>
+      </div>
+      <div class="field">
+        <label for="message">What should change first?</label>
+        <textarea id="message" name="message" placeholder="Light, storage, proportion, atmosphere, material palette..." required></textarea>
+        <small data-error-for="message"></small>
+      </div>
+      <button class="solid-button" type="submit">Send inquiry</button>
+      <p class="form-status" aria-live="polite" data-form-status></p>
+    </form>
+  </aside>
+
+  <script>
+    (function () {
+      var body = document.body;
+      var header = document.querySelector("[data-header]");
+      var hero = document.querySelector(".hero");
+      var drawer = document.querySelector("[data-drawer]");
+      var openButtons = Array.prototype.slice.call(document.querySelectorAll("[data-open-drawer]"));
+      var closeButtons = Array.prototype.slice.call(document.querySelectorAll("[data-close-drawer]"));
+      var form = document.querySelector("[data-inquiry-form]");
+      var status = document.querySelector("[data-form-status]");
+      var lastFocus = null;
+
+      function openDrawer() {
+        lastFocus = document.activeElement;
+        body.classList.add("drawer-open");
+        drawer.setAttribute("aria-hidden", "false");
+        var firstInput = drawer.querySelector("input, select, textarea, button");
+        if (firstInput) firstInput.focus({ preventScroll: true });
+      }
+
+      function closeDrawer() {
+        body.classList.remove("drawer-open");
+        drawer.setAttribute("aria-hidden", "true");
+        if (lastFocus && typeof lastFocus.focus === "function") {
+          lastFocus.focus({ preventScroll: true });
+        }
+      }
+
+      openButtons.forEach(function (button) {
+        button.addEventListener("click", openDrawer);
+      });
+
+      closeButtons.forEach(function (button) {
+        button.addEventListener("click", closeDrawer);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && body.classList.contains("drawer-open")) {
+          closeDrawer();
+        }
+      });
+
+      if ("IntersectionObserver" in window && hero && header) {
+        var navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            header.classList.toggle("is-solid", !entry.isIntersecting);
+          });
+        }, { threshold: 0.08 });
+        navObserver.observe(hero);
+      }
+
+      if ("IntersectionObserver" in window) {
+        var revealObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+
+        document.querySelectorAll(".reveal").forEach(function (element) {
+          revealObserver.observe(element);
+        });
+      } else {
+        document.querySelectorAll(".reveal").forEach(function (element) {
+          element.classList.add("is-visible");
+        });
+      }
+
+      function setError(name, message) {
+        var target = form.querySelector("[data-error-for='" + name + "']");
+        if (target) target.textContent = message || "";
+      }
+
+      function validateEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+
+      if (form) {
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var data = new FormData(form);
+          var name = String(data.get("name") || "").trim();
+          var email = String(data.get("email") || "").trim();
+          var scope = String(data.get("scope") || "").trim();
+          var message = String(data.get("message") || "").trim();
+          var hasError = false;
+
+          ["name", "email", "location", "scope", "message"].forEach(function (field) {
+            setError(field, "");
+          });
+
+          if (!name) {
+            setError("name", "Please add your name.");
+            hasError = true;
+          }
+
+          if (!email || !validateEmail(email)) {
+            setError("email", "Please enter a valid email.");
+            hasError = true;
+          }
+
+          if (!scope) {
+            setError("scope", "Please choose a project scope.");
+            hasError = true;
+          }
+
+          if (!message || message.length < 12) {
+            setError("message", "Please add a little more context.");
+            hasError = true;
+          }
+
+          if (hasError) {
+            status.textContent = "A few details need attention.";
+            return;
+          }
+
+          status.textContent = "Inquiry noted. We will reply with next steps.";
+          form.reset();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
