@@ -1,1220 +1,1835 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maison Arclay | Interior Architecture</title>
-  <meta name="description" content="Maison Arclay designs quiet, material-led residential interiors with editorial restraint." />
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: oklch(94.6% 0.007 82);
-      --surface: oklch(97.7% 0.004 82);
-      --surface-2: oklch(90.8% 0.006 78);
-      --fg: oklch(20.4% 0.012 72);
-      --muted: oklch(43% 0.010 72);
-      --border: oklch(77% 0.007 78);
-      --accent: oklch(24% 0.010 72);
-      --scrim: rgb(18 17 15 / .46);
-      --light: oklch(96.2% 0.005 82);
-      --font-display: "Iowan Old Style", "Iowan Old Style Roman", "Palatino Linotype", "Times New Roman", Georgia, serif;
-      --font-body: "Neue Haas Grotesk Text", "Suisse Int'l", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, ui-monospace, monospace;
-      --ease: cubic-bezier(.16, 1, .3, 1);
-      --max: 1560px;
-      --pad-x: clamp(20px, 4vw, 72px);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      background: var(--bg);
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    body.drawer-open {
-      overflow: hidden;
-    }
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    :focus-visible {
-      outline: 2px solid color-mix(in oklch, var(--accent) 72%, white);
-      outline-offset: 4px;
-    }
-
-    .site-header {
-      position: fixed;
-      inset: 0 0 auto;
-      z-index: 30;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      padding: 0 var(--pad-x);
-      color: var(--light);
-      border-bottom: 1px solid transparent;
-      transition: background .45s var(--ease), color .45s var(--ease), border-color .45s var(--ease);
-    }
-
-    .site-header.is-solid {
-      background: color-mix(in oklch, var(--bg) 92%, white);
-      color: var(--fg);
-      border-color: color-mix(in oklch, var(--border) 72%, transparent);
-    }
-
-    .nav-inner {
-      width: 100%;
-      display: grid;
-      grid-template-columns: minmax(150px, 1fr) auto minmax(120px, 1fr);
-      align-items: center;
-      gap: 28px;
-    }
-
-    .brand {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      line-height: 1;
-      letter-spacing: .095em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: clamp(18px, 3vw, 46px);
-      font-size: 12px;
-      line-height: 1;
-      letter-spacing: .075em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .nav-links a {
-      opacity: .86;
-      transition: opacity .25s var(--ease);
-    }
-
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
-      opacity: 1;
-    }
-
-    .nav-action {
-      justify-self: end;
-    }
-
-    .text-button,
-    .solid-button {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid currentColor;
-      border-radius: 0;
-      padding: 0 18px;
-      background: transparent;
-      color: currentColor;
-      font-size: 12px;
-      line-height: 1;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
-    }
-
-    .solid-button {
-      background: var(--accent);
-      color: var(--light);
-      border-color: var(--accent);
-    }
-
-    .text-button:hover,
-    .solid-button:hover {
-      transform: translateY(-1px);
-    }
-
-    .text-button:active,
-    .solid-button:active {
-      transform: translateY(1px);
-    }
-
-    main {
-      overflow: clip;
-    }
-
-    .hero {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      min-height: 100vh;
-      min-height: 100dvh;
-      background: var(--fg);
-      color: var(--light);
-    }
-
-    .hero-media {
-      position: absolute;
-      inset: 0;
-      z-index: -3;
-    }
-
-    .hero-media img {
-      width: 100%;
-      height: 100%;
-      min-height: 100vh;
-      min-height: 100dvh;
-      object-fit: cover;
-      object-position: center center;
-      filter: saturate(.82) contrast(.94);
-      transform: scale(1.04);
-    }
-
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .hero::before {
-      z-index: -2;
-      background:
-        linear-gradient(90deg, rgb(17 16 14 / .64) 0%, rgb(17 16 14 / .36) 38%, rgb(17 16 14 / .03) 74%),
-        linear-gradient(180deg, rgb(17 16 14 / .18) 0%, rgb(17 16 14 / .02) 45%, rgb(17 16 14 / .24) 100%);
-    }
-
-    .hero::after {
-      z-index: -1;
-      background: var(--scrim);
-      mix-blend-mode: multiply;
-    }
-
-    .hero-content {
-      width: min(100%, var(--max));
-      min-height: 100vh;
-      min-height: 100dvh;
-      margin: 0 auto;
-      padding: clamp(86px, 9vh, 96px) var(--pad-x) clamp(54px, 7vh, 80px);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-    }
-
-    .hero-title {
-      margin: 0;
-      max-width: 8.7ch;
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(70px, 13.5vw, 196px);
-      line-height: .84;
-      letter-spacing: -.03em;
-      text-wrap: balance;
-    }
-
-    .hero-lower {
-      align-self: end;
-      display: grid;
-      grid-template-columns: minmax(0, 440px) minmax(180px, 1fr);
-      gap: clamp(28px, 6vw, 120px);
-      align-items: end;
-      padding-left: clamp(0px, 8vw, 178px);
-    }
-
-    .hero-copy {
-      margin: 0;
-      max-width: 30ch;
-      color: color-mix(in oklch, var(--light) 86%, transparent);
-      font-size: clamp(16px, 1.25vw, 19px);
-      line-height: 1.58;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: flex-end;
-    }
-
-    .hero-actions .solid-button {
-      background: var(--light);
-      color: var(--fg);
-      border-color: var(--light);
-    }
-
-    .hero-actions .text-button {
-      color: var(--light);
-      border-color: color-mix(in oklch, var(--light) 70%, transparent);
-      background: rgb(255 255 255 / .08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .section {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      padding: clamp(92px, 13vw, 190px) var(--pad-x);
-    }
-
-    .section.tight-top {
-      padding-top: clamp(72px, 10vw, 132px);
-    }
-
-    .section-kicker {
-      margin: 0 0 26px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      line-height: 1;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .thesis {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
-      gap: clamp(42px, 8vw, 154px);
-      align-items: end;
-    }
-
-    .thesis h2 {
-      margin: 0;
-      max-width: 940px;
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(42px, 7.2vw, 112px);
-      line-height: 1.02;
-      letter-spacing: -.025em;
-      text-wrap: balance;
-    }
-
-    .thesis p {
-      margin: 0 0 10px;
-      max-width: 34ch;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.72;
-    }
-
-    .image-band {
-      width: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    .image-band img {
-      width: 100%;
-      height: clamp(520px, 68vw, 860px);
-      object-fit: cover;
-      object-position: center center;
-      filter: saturate(.78) contrast(.98);
-    }
-
-    .image-band figcaption {
-      width: min(100%, var(--max));
-      margin: 16px auto 0;
-      padding: 0 var(--pad-x);
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      letter-spacing: .01em;
-    }
-
-    .rooms-head {
-      max-width: 760px;
-      margin: 0 0 clamp(46px, 7vw, 92px) clamp(0px, 8vw, 132px);
-    }
-
-    .rooms-head h2,
-    .materials-copy h2,
-    .method h2,
-    .contact-copy h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(40px, 6vw, 92px);
-      line-height: 1.03;
-      letter-spacing: -.025em;
-      text-wrap: balance;
-    }
-
-    .rooms-head p,
-    .materials-copy p,
-    .method-intro,
-    .contact-copy p {
-      margin: 22px 0 0;
-      max-width: 58ch;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.72;
-    }
-
-    .rooms-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.04fr) minmax(280px, .8fr);
-      grid-template-areas:
-        "large detail"
-        "large portrait";
-      gap: clamp(18px, 2.4vw, 36px);
-      align-items: stretch;
-    }
-
-    .room-card {
-      margin: 0;
-    }
-
-    .room-card.large {
-      grid-area: large;
-    }
-
-    .room-card.detail {
-      grid-area: detail;
-      width: 78%;
-      justify-self: start;
-      align-self: end;
-    }
-
-    .room-card.portrait {
-      grid-area: portrait;
-      align-self: start;
-    }
-
-    .room-card img {
-      height: 100%;
-      min-height: 300px;
-      object-fit: cover;
-      filter: saturate(.80) contrast(.98);
-    }
-
-    .room-card.large img {
-      aspect-ratio: 4 / 5;
-      min-height: 620px;
-    }
-
-    .room-card.detail img {
-      aspect-ratio: 16 / 10;
-      min-height: 240px;
-    }
-
-    .room-card.portrait img {
-      aspect-ratio: 1 / 1;
-      min-height: 360px;
-    }
-
-    .room-card figcaption {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      letter-spacing: .01em;
-    }
-
-    .materials {
-      display: grid;
-      grid-template-columns: minmax(0, .84fr) minmax(320px, .72fr);
-      gap: clamp(36px, 8vw, 126px);
-      align-items: center;
-      border-top: 1px solid var(--border);
-    }
-
-    .materials-image img {
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      filter: saturate(.76) contrast(.98);
-    }
-
-    .material-points {
-      display: grid;
-      gap: 22px;
-      margin: 42px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .material-points li {
-      display: grid;
-      grid-template-columns: 132px minmax(0, 1fr);
-      gap: 22px;
-      padding-top: 22px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .material-points strong {
-      color: var(--fg);
-      font-weight: 520;
-    }
-
-    .method {
-      background: color-mix(in oklch, var(--surface) 78%, var(--bg));
-      border-block: 1px solid var(--border);
-      width: 100%;
-      max-width: none;
-    }
-
-    .method-inner {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      padding: clamp(92px, 13vw, 172px) var(--pad-x);
-    }
-
-    .method-grid {
-      margin-top: clamp(46px, 7vw, 92px);
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      border-top: 1px solid var(--border);
-    }
-
-    .method-item {
-      min-height: 252px;
-      padding: clamp(28px, 4vw, 54px) clamp(18px, 3vw, 44px) 24px 0;
-      border-right: 1px solid var(--border);
-    }
-
-    .method-item:last-child {
-      border-right: 0;
-      padding-right: 0;
-    }
-
-    .method-item h3 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: clamp(31px, 4vw, 58px);
-      line-height: 1;
-      letter-spacing: -.02em;
-      font-weight: 400;
-    }
-
-    .method-item p {
-      margin: 26px 0 0;
-      max-width: 31ch;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .contact {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      padding: clamp(92px, 13vw, 180px) var(--pad-x);
-    }
-
-    .contact-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
-      gap: clamp(36px, 9vw, 156px);
-      align-items: end;
-      padding-top: clamp(34px, 5vw, 62px);
-      border-top: 1px solid var(--border);
-    }
-
-    .contact-copy {
-      max-width: 760px;
-    }
-
-    .contact-action {
-      justify-self: end;
-    }
-
-    .site-footer {
-      display: grid;
-      grid-template-columns: minmax(160px, 1fr) auto minmax(160px, 1fr);
-      align-items: center;
-      gap: 24px;
-      min-height: 82px;
-      padding: 22px var(--pad-x);
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: .04em;
-    }
-
-    .site-footer strong {
-      color: var(--fg);
-      font-weight: 520;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      justify-self: center;
-    }
-
-    .footer-note {
-      justify-self: end;
-    }
-
-    .drawer-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      background: rgb(18 16 14 / .48);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .35s var(--ease);
-    }
-
-    .drawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 70;
-      width: min(520px, 100vw);
-      background: var(--surface);
-      color: var(--fg);
-      transform: translateX(100%);
-      transition: transform .45s var(--ease);
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: -26px 0 70px rgb(18 16 14 / .22);
-    }
-
-    body.drawer-open .drawer-backdrop {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    body.drawer-open .drawer {
-      transform: translateX(0);
-    }
-
-    .drawer-header {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 18px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .drawer-header h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 42px;
-      line-height: 1;
-      letter-spacing: -.02em;
-    }
-
-    .drawer-header p {
-      margin: 14px 0 0;
-      max-width: 36ch;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .drawer-close {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--fg);
-      font-size: 24px;
-      line-height: 1;
-      transition: transform .25s var(--ease), background .25s var(--ease);
-    }
-
-    .drawer-close:hover {
-      background: var(--surface-2);
-      transform: translateY(-1px);
-    }
-
-    .inquiry-form {
-      display: grid;
-      gap: 18px;
-      padding-top: 28px;
-      overflow: auto;
-    }
-
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-
-    .field label {
-      color: var(--fg);
-      font-size: 12px;
-      letter-spacing: .075em;
-      text-transform: uppercase;
-    }
-
-    .field input,
-    .field textarea,
-    .field select {
-      width: 100%;
-      min-height: 48px;
-      border: 1px solid var(--border);
-      border-radius: 0;
-      background: color-mix(in oklch, var(--surface) 82%, white);
-      color: var(--fg);
-      padding: 12px 13px;
-      outline: 0;
-      transition: border-color .25s var(--ease), background .25s var(--ease);
-    }
-
-    .field textarea {
-      min-height: 116px;
-      resize: vertical;
-    }
-
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: color-mix(in oklch, var(--muted) 76%, var(--fg));
-      opacity: .75;
-    }
-
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: var(--accent);
-      background: var(--surface);
-    }
-
-    .field small {
-      min-height: 18px;
-      color: oklch(39% .065 34);
-      font-size: 12px;
-    }
-
-    .form-status {
-      min-height: 24px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .75s var(--ease), transform .75s var(--ease);
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .hero-media img {
-        animation: heroDrift 14s var(--ease) both;
-      }
-
-      .hero-title,
-      .hero-copy,
-      .hero-actions {
-        opacity: 0;
-        transform: translateY(18px);
-        animation: riseIn .9s var(--ease) forwards;
-      }
-
-      .hero-copy {
-        animation-delay: .16s;
-      }
-
-      .hero-actions {
-        animation-delay: .28s;
-      }
-    }
-
-    @keyframes heroDrift {
-      from {
-        transform: scale(1.07) translate3d(-1.1%, 0, 0);
-      }
-      to {
-        transform: scale(1.04) translate3d(0, 0, 0);
-      }
-    }
-
-    @keyframes riseIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .001ms !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    @media (max-width: 1040px) {
-      .thesis,
-      .materials,
-      .contact-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .thesis p,
-      .materials-copy,
-      .contact-action {
-        max-width: 68ch;
-        justify-self: start;
-      }
-
-      .rooms-grid {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-          "large"
-          "detail"
-          "portrait";
-      }
-
-      .room-card.detail {
-        width: 100%;
-      }
-
-      .method-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .method-item {
-        min-height: auto;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-        padding-right: 0;
-      }
-
-      .method-item:last-child {
-        border-bottom: 0;
-      }
-
-      .site-footer {
-        grid-template-columns: 1fr;
-        justify-items: start;
-      }
-
-      .footer-links,
-      .footer-note {
-        justify-self: start;
-      }
-    }
-
-    @media (max-width: 740px) {
-      .site-header {
-        height: 64px;
-      }
-
-      .nav-inner {
-        grid-template-columns: 1fr auto;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .nav-action .text-button {
-        min-height: 40px;
-        padding-inline: 12px;
-        font-size: 11px;
-      }
-
-      .hero-content {
-        padding-top: 92px;
-      }
-
-      .hero-title {
-        max-width: 7.6ch;
-        font-size: clamp(64px, 22vw, 92px);
-      }
-
-      .hero-lower {
-        grid-template-columns: 1fr;
-        padding-left: 0;
-        gap: 24px;
-      }
-
-      .hero-actions {
-        justify-content: flex-start;
-      }
-
-      .hero-actions .text-button,
-      .hero-actions .solid-button {
-        flex: 1 1 128px;
-      }
-
-      .section,
-      .method-inner,
-      .contact {
-        padding-block: 76px;
-      }
-
-      .image-band img {
-        height: 72vh;
-        min-height: 420px;
-      }
-
-      .rooms-head {
-        margin-left: 0;
-      }
-
-      .room-card img,
-      .room-card.large img,
-      .room-card.detail img,
-      .room-card.portrait img {
-        min-height: 290px;
-        aspect-ratio: 4 / 5;
-      }
-
-      .material-points li {
-        grid-template-columns: 1fr;
-        gap: 6px;
-      }
-
-      .drawer {
-        padding: 20px;
-      }
-
-      .drawer-header h2 {
-        font-size: 36px;
-      }
-    }
-  </style>
+  <title>拾茶序官网入口</title>
+  <meta name="description" content="拾茶序新式茶饮品牌官网页面入口，包含首页、饮品菜单、门店查询、品牌故事、招商加盟和联系我们。" />
+  <style data-od-inline-asset="styles.css">
+:root {
+  --bg: oklch(97.5% 0.017 95);
+  --surface: oklch(99% 0.01 104);
+  --surface-strong: oklch(100% 0.004 100);
+  --fg: oklch(27% 0.045 126);
+  --muted: oklch(50% 0.035 118);
+  --border: oklch(88% 0.026 102);
+  --accent: oklch(58% 0.095 142);
+  --accent-deep: oklch(37% 0.08 142);
+  --tea-soft: oklch(93% 0.035 130);
+  --wood: oklch(70% 0.07 72);
+  --wood-soft: oklch(91% 0.038 78);
+  --gold: oklch(76% 0.08 88);
+  --low: oklch(63% 0.095 166);
+  --warn: oklch(71% 0.10 78);
+  --danger: oklch(58% 0.12 32);
+  --shadow: 0 22px 70px oklch(38% 0.05 120 / 0.13);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --max: 1180px;
+  --display: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --mono: "DIN Alternate", "SF Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 12% 8%, oklch(94% 0.04 130 / 0.68), transparent 28rem),
+    radial-gradient(circle at 88% 16%, oklch(91% 0.04 78 / 0.54), transparent 24rem),
+    var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.34;
+  background:
+    linear-gradient(120deg, transparent 0 48%, oklch(74% 0.045 132 / 0.18) 49% 50%, transparent 51%),
+    linear-gradient(90deg, oklch(86% 0.026 100 / 0.28) 1px, transparent 1px);
+  background-size: 220px 220px, 32px 32px;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 200;
+  transform: translateY(-150%);
+  border-radius: 999px;
+  background: var(--accent-deep);
+  color: white;
+  padding: 10px 14px;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  border-bottom: 1px solid oklch(89% 0.025 102 / 0.82);
+  background: oklch(98% 0.012 96 / 0.88);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.nav-wrap {
+  width: min(100% - 32px, var(--max));
+  min-height: 70px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: max-content;
+}
+
+.brand-seal {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: white;
+  background:
+    radial-gradient(circle at 32% 28%, oklch(78% 0.08 132), transparent 29%),
+    var(--accent-deep);
+  font-family: var(--display);
+  font-size: 18px;
+  box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.28);
+}
+
+.brand-word {
+  display: grid;
+  line-height: 1.15;
+}
+
+.brand-word strong {
+  font-family: var(--display);
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.brand-word span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.nav-links {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-links a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 14px;
+  color: var(--muted);
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible,
+body[data-page="home"] .nav-home,
+body[data-page="menu"] .nav-menu,
+body[data-page="stores"] .nav-stores,
+body[data-page="story"] .nav-story,
+body[data-page="franchise"] .nav-franchise,
+body[data-page="contact"] .nav-contact {
+  color: var(--accent-deep);
+  background: var(--tea-soft);
+}
+
+.nav-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent-deep);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 4px auto;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.button,
+.ghost-button,
+.text-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.button {
+  background: var(--accent-deep);
+  color: white;
+  box-shadow: 0 12px 30px oklch(37% 0.08 142 / 0.18);
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-1px);
+  background: oklch(32% 0.08 142);
+}
+
+.button:active,
+.ghost-button:active,
+.text-link:active,
+.filter-button:active,
+.card-button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.ghost-button {
+  background: oklch(100% 0.002 100 / 0.78);
+  color: var(--accent-deep);
+  border-color: var(--border);
+}
+
+.ghost-button:hover,
+.ghost-button:focus-visible {
+  background: var(--tea-soft);
+  border-color: oklch(77% 0.05 128);
+}
+
+.text-link {
+  color: var(--accent-deep);
+  padding-inline: 0;
+  min-height: auto;
+}
+
+.page-main {
+  min-height: 70dvh;
+}
+
+.section {
+  width: min(100% - 32px, var(--max));
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 112px) 0;
+}
+
+.section.tight {
+  padding: clamp(36px, 6vw, 76px) 0;
+}
+
+.section-head {
+  max-width: 720px;
+  display: grid;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.section-head.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--accent-deep);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+h1,
+h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-size: clamp(42px, 7vw, 76px);
+  max-width: 11ch;
+}
+
+h2 {
+  font-size: clamp(30px, 4.5vw, 50px);
+}
+
+h3 {
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: clamp(17px, 2vw, 19px);
+  max-width: 58ch;
+}
+
+.soft-note {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.hero {
+  width: min(100% - 32px, var(--max));
+  min-height: calc(100dvh - 72px);
+  margin: 0 auto;
+  padding: clamp(40px, 7vw, 72px) 0 54px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+  align-items: center;
+  gap: clamp(34px, 6vw, 76px);
+}
+
+.hero-copy {
+  display: grid;
+  gap: 20px;
+  align-content: center;
+}
+
+.hero-actions,
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-panel {
+  position: relative;
+  min-height: clamp(420px, 58vw, 620px);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.hero-photo {
+  border-radius: calc(var(--radius) + 8px);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid oklch(100% 0 0 / 0.7);
+}
+
+.hero-photo::after,
+.story-photo::after,
+.drink-photo::after,
+.store-photo::after,
+.gallery-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 48%, oklch(27% 0.045 126 / 0.18));
+}
+
+.hero-photo,
+.story-photo,
+.drink-photo,
+.store-photo,
+.gallery-photo {
+  position: relative;
+  background: var(--tea-soft);
+}
+
+.season-card {
+  position: absolute;
+  left: -34px;
+  bottom: 34px;
+  width: min(280px, 64%);
+  padding: 18px;
+  border: 1px solid oklch(100% 0 0 / 0.72);
+  border-radius: var(--radius);
+  background: oklch(99% 0.01 104 / 0.88);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 10px;
+}
+
+.season-card strong {
+  font-family: var(--display);
+  font-size: 22px;
+}
+
+.season-card span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.tea-orbit {
+  position: absolute;
+  right: -26px;
+  top: 28px;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  border: 1px solid oklch(84% 0.04 102);
+  background:
+    radial-gradient(circle at 35% 32%, oklch(96% 0.02 95), transparent 22%),
+    radial-gradient(circle at 62% 66%, oklch(77% 0.08 88 / 0.7), transparent 30%),
+    var(--wood-soft);
+}
+
+.launcher-hero {
+  width: min(100% - 32px, var(--max));
+  min-height: calc(100dvh - 72px);
+  margin: 0 auto;
+  padding: clamp(48px, 8vw, 88px) 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  align-items: center;
+  gap: clamp(32px, 7vw, 86px);
+}
+
+.launcher-panel {
+  border-radius: calc(var(--radius) + 8px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.screen-grid,
+.drink-grid,
+.store-grid,
+.benefit-grid,
+.contact-grid,
+.gallery-grid,
+.menu-feature-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.screen-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.screen-card,
+.drink-card,
+.store-card,
+.benefit-card,
+.contact-card,
+.policy-card,
+.flow-card,
+.message-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: oklch(100% 0.004 100 / 0.78);
+  overflow: hidden;
+}
+
+.screen-card {
+  display: grid;
+  grid-template-rows: 170px auto;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.screen-card:hover,
+.screen-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.screen-thumb {
+  overflow: hidden;
+  background: var(--tea-soft);
+}
+
+.screen-card-body {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.screen-card-body span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 8px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.carousel-track {
+  display: grid;
+}
+
+.carousel-slide {
+  grid-area: 1 / 1;
+  min-height: 430px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 420ms ease;
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(300px, 1fr);
+}
+
+.carousel-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carousel-copy {
+  padding: clamp(24px, 4vw, 48px);
+  display: grid;
+  align-content: center;
+  gap: 16px;
+}
+
+.carousel-copy h2 {
+  font-size: clamp(30px, 4vw, 48px);
+}
+
+.carousel-copy p {
+  color: var(--muted);
+}
+
+.carousel-media {
+  min-height: 380px;
+}
+
+.carousel-controls {
+  position: absolute;
+  left: clamp(20px, 4vw, 44px);
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: oklch(100% 0.004 100 / 0.84);
+  color: var(--accent-deep);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 0.9fr;
+  gap: 18px;
+}
+
+.drink-card {
+  display: grid;
+  grid-template-rows: 260px auto;
+}
+
+.popular-grid .drink-card:first-child {
+  grid-row: span 2;
+  grid-template-rows: 420px auto;
+}
+
+.drink-photo {
+  overflow: hidden;
+}
+
+.drink-body {
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.drink-meta,
+.store-meta,
+.mini-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border-radius: 999px;
+  padding: 0 10px;
+  background: var(--tea-soft);
+  color: var(--accent-deep);
+  font-size: 13px;
+}
+
+.tag.wood {
+  background: var(--wood-soft);
+  color: oklch(42% 0.06 72);
+}
+
+.tag.low {
+  background: oklch(91% 0.045 166);
+  color: oklch(35% 0.08 166);
+}
+
+.price {
+  font-family: var(--mono);
+  font-size: 22px;
+  color: var(--accent-deep);
+}
+
+.card-button {
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent-deep);
+  cursor: pointer;
+}
+
+.split-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) minmax(340px, 1.06fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+.story-panel {
+  display: grid;
+  gap: 22px;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent);
+  padding: 8px 0 8px 20px;
+  color: var(--accent-deep);
+  font-family: var(--display);
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.35;
+}
+
+.story-photo,
+.gallery-photo,
+.store-photo {
+  min-height: 360px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.events-strip {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+}
+
+.event-main {
+  min-height: 320px;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, oklch(93% 0.035 130), oklch(92% 0.038 78)),
+    var(--surface);
+  border: 1px solid var(--border);
+  padding: clamp(24px, 4vw, 42px);
+  display: grid;
+  align-content: end;
+  gap: 14px;
+}
+
+.event-list {
+  display: grid;
+  gap: 14px;
+}
+
+.event-item {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.filter-bar {
+  position: sticky;
+  top: 82px;
+  z-index: 30;
+  margin: 0 auto 28px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: oklch(98% 0.012 96 / 0.9);
+  backdrop-filter: blur(14px);
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.filter-button {
+  min-height: 42px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.filter-button[aria-pressed="true"],
+.filter-button:hover,
+.filter-button:focus-visible {
+  background: var(--accent-deep);
+  color: white;
+}
+
+.drink-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.menu-feature-grid {
+  grid-template-columns: 1.2fr 0.8fr;
+}
+
+.nutrition-card {
+  border-radius: var(--radius);
+  background: var(--tea-soft);
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.nutrition-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nutrition-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.store-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.store-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.store-grid {
+  grid-template-columns: 1fr;
+}
+
+.store-card {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  min-height: 158px;
+}
+
+.store-photo {
+  min-height: 100%;
+  border-radius: 0;
+  border: 0;
+}
+
+.store-body {
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.map-card {
+  position: sticky;
+  top: 98px;
+  min-height: 610px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 8px);
+  background:
+    linear-gradient(90deg, oklch(91% 0.03 130 / 0.7) 1px, transparent 1px),
+    linear-gradient(0deg, oklch(91% 0.03 130 / 0.7) 1px, transparent 1px),
+    radial-gradient(circle at 30% 26%, oklch(88% 0.06 142 / 0.78), transparent 12rem),
+    radial-gradient(circle at 72% 64%, oklch(91% 0.05 78 / 0.9), transparent 13rem),
+    var(--surface);
+  background-size: 46px 46px, 46px 46px, auto, auto, auto;
+  overflow: hidden;
+}
+
+.map-river {
+  position: absolute;
+  inset: auto -10% 36% -10%;
+  height: 90px;
+  transform: rotate(-9deg);
+  border-radius: 999px;
+  background: oklch(84% 0.045 180 / 0.45);
+}
+
+.map-pin {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  box-shadow: 0 8px 22px oklch(37% 0.08 142 / 0.28);
+  cursor: pointer;
+}
+
+.map-pin.is-active {
+  background: var(--warn);
+  transform: scale(1.22);
+}
+
+.map-label {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  max-width: 280px;
+  border-radius: var(--radius);
+  background: oklch(100% 0.004 100 / 0.86);
+  border: 1px solid var(--border);
+  padding: 16px;
+  backdrop-filter: blur(14px);
+}
+
+.story-timeline,
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.timeline-card,
+.flow-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.timeline-card strong,
+.flow-card strong {
+  color: var(--accent-deep);
+}
+
+.gallery-grid {
+  grid-template-columns: 1.2fr 0.8fr 0.8fr;
+}
+
+.gallery-grid .gallery-photo:first-child {
+  grid-row: span 2;
+  min-height: 520px;
+}
+
+.benefit-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.benefit-card,
+.policy-card,
+.contact-card,
+.message-card {
+  padding: 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.cost-panel {
+  border-radius: calc(var(--radius) + 8px);
+  background:
+    linear-gradient(135deg, oklch(94% 0.035 130), oklch(91% 0.035 82)),
+    var(--surface);
+  border: 1px solid var(--border);
+  padding: clamp(24px, 4vw, 42px);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.cost-number {
+  font-family: var(--display);
+  color: var(--accent-deep);
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 1;
+}
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.contact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.form-shell {
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 8px);
+  background: var(--surface);
+  padding: clamp(22px, 4vw, 34px);
+  box-shadow: 0 12px 40px oklch(38% 0.05 120 / 0.08);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  border-radius: var(--radius-sm);
+  border: 1px solid oklch(82% 0.035 102);
+  background: oklch(100% 0.004 100);
+  color: var(--fg);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field textarea {
+  min-height: 128px;
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: oklch(48% 0.035 118);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px oklch(58% 0.095 142 / 0.16);
+}
+
+.field-error {
+  min-height: 20px;
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: oklch(20% 0.04 120 / 0.46);
+}
+
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal-card {
+  width: min(920px, 100%);
+  max-height: min(760px, 92dvh);
+  overflow: auto;
+  border-radius: calc(var(--radius) + 8px);
+  background: var(--surface);
+  box-shadow: 0 36px 120px oklch(16% 0.04 120 / 0.32);
+  display: grid;
+  grid-template-columns: minmax(260px, 0.92fr) minmax(0, 1.08fr);
+}
+
+.modal-media {
+  min-height: 420px;
+  background: var(--tea-soft);
+}
+
+.modal-body {
+  padding: clamp(22px, 4vw, 36px);
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.modal-close {
+  justify-self: end;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.option-box {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  background: oklch(100% 0.004 100);
+}
+
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 180;
+  width: min(360px, calc(100% - 32px));
+  border-radius: var(--radius);
+  background: var(--accent-deep);
+  color: white;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 240ms ease, opacity 240ms ease;
+}
+
+.toast.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: oklch(94% 0.02 98 / 0.7);
+}
+
+.footer-grid {
+  width: min(100% - 32px, var(--max));
+  margin: 0 auto;
+  padding: 36px 0;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 24px;
+  align-items: start;
+}
+
+.footer-links,
+.social-links {
+  display: grid;
+  gap: 8px;
+}
+
+.qr {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(90deg, var(--accent-deep) 8px, transparent 8px 16px, var(--accent-deep) 16px 24px, transparent 24px),
+    linear-gradient(0deg, transparent 8px, var(--accent-deep) 8px 16px, transparent 16px 24px, var(--accent-deep) 24px),
+    var(--surface);
+  background-size: 32px 32px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .nav-wrap {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 71px;
+    left: 16px;
+    right: 16px;
+    display: none;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) + 8px);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    padding: 10px;
+    justify-self: stretch;
+  }
+
+  .nav-links.is-open {
+    display: grid;
+  }
+
+  .nav-links a {
+    justify-content: center;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-action .button {
+    display: none;
+  }
+
+  .hero,
+  .launcher-hero,
+  .split-feature,
+  .store-layout,
+  .cost-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-panel {
+    min-height: 420px;
+  }
+
+  .season-card {
+    left: 18px;
+    bottom: 18px;
+  }
+
+  .tea-orbit {
+    right: 14px;
+  }
+
+  .carousel-slide {
+    grid-template-columns: 1fr;
+  }
+
+  .carousel-media {
+    min-height: 320px;
+  }
+
+  .popular-grid,
+  .drink-grid,
+  .benefit-grid,
+  .contact-grid,
+  .gallery-grid,
+  .story-timeline,
+  .flow-grid,
+  .policy-grid,
+  .menu-feature-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .popular-grid .drink-card:first-child,
+  .gallery-grid .gallery-photo:first-child {
+    grid-row: auto;
+  }
+
+  .map-card {
+    position: relative;
+    top: auto;
+    min-height: 460px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  body {
+    font-size: 15px;
+  }
+
+  .section {
+    width: min(100% - 28px, var(--max));
+    padding: 48px 0;
+  }
+
+  .nav-wrap {
+    width: min(100% - 28px, var(--max));
+  }
+
+  .brand-word span {
+    display: none;
+  }
+
+  h1 {
+    font-size: clamp(38px, 12vw, 54px);
+    max-width: 9.5ch;
+  }
+
+  .hero,
+  .launcher-hero {
+    width: min(100% - 28px, var(--max));
+    padding-top: 34px;
+    gap: 26px;
+  }
+
+  .hero-panel {
+    min-height: 360px;
+  }
+
+  .screen-grid,
+  .popular-grid,
+  .drink-grid,
+  .benefit-grid,
+  .contact-grid,
+  .gallery-grid,
+  .story-timeline,
+  .flow-grid,
+  .policy-grid,
+  .form-grid,
+  .menu-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .events-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .store-card {
+    grid-template-columns: 1fr;
+  }
+
+  .store-photo {
+    min-height: 220px;
+  }
+
+  .filter-bar {
+    top: 78px;
+    border-radius: var(--radius);
+  }
+
+  .modal-card {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-media {
+    min-height: 260px;
+  }
+
+  .option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+</style>
 </head>
 <body>
-  <header class="site-header" data-header>
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="Maison Arclay home">Maison Arclay</a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#rooms">Rooms</a>
-        <a href="#materials">Materials</a>
-        <a href="#method">Method</a>
-        <a href="#contact">Inquire</a>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand-mark" href="index.html" aria-label="拾茶序官网入口">
+        <span class="brand-seal">拾</span>
+        <span class="brand-word"><strong>拾茶序</strong><span>新式茶饮</span></span>
+      </a>
+      <nav class="nav-links" data-nav-links aria-label="主导航">
+        <a class="nav-home" href="home.html">首页</a>
+        <a class="nav-menu" href="menu.html">饮品菜单</a>
+        <a class="nav-stores" href="stores.html">门店</a>
+        <a class="nav-story" href="story.html">品牌故事</a>
+        <a class="nav-franchise" href="franchise.html">加盟</a>
+        <a class="nav-contact" href="contact.html">联系我们</a>
       </nav>
       <div class="nav-action">
-        <button class="text-button" type="button" data-open-drawer>Inquire</button>
+        <a class="button" href="#" data-order-link>立即点单</a>
+        <button class="nav-toggle" type="button" aria-label="打开导航" aria-expanded="false" data-nav-toggle>
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="top" aria-label="Maison Arclay interior architecture">
-      <div class="hero-media" aria-hidden="true">
-        <img src="assets/interior-hero.png" alt="" fetchpriority="high" />
-      </div>
-      <div class="hero-content">
-        <h1 class="hero-title">Maison Arclay</h1>
-        <div class="hero-lower">
-          <p class="hero-copy">Interior architecture for private homes, edited through light, proportion, and material restraint.</p>
-          <div class="hero-actions" aria-label="Hero actions">
-            <a class="text-button" href="#rooms">View rooms</a>
-            <button class="solid-button" type="button" data-open-drawer>Inquire</button>
-          </div>
+  <main id="main" class="page-main">
+    <section class="launcher-hero">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">清新治愈轻国风</span>
+        <h1>拾一杯茶，也拾一段慢下来。</h1>
+        <p class="lead">六个独立页面覆盖品牌展示、线上点单、门店查询、新品活动和加盟咨询，移动端优先保证点单路径顺畅。</p>
+        <div class="hero-actions">
+          <a class="button" href="home.html">进入官网首页</a>
+          <a class="ghost-button" href="menu.html">查看饮品</a>
         </div>
       </div>
-    </section>
-
-    <section class="section thesis reveal" aria-labelledby="thesis-title">
-      <div>
-        <p class="section-kicker">Studio thesis</p>
-        <h2 id="thesis-title">A home should feel composed before it is decorated.</h2>
-      </div>
-      <p>We work with private rooms that need fewer statements and stronger decisions: the right opening, the right shadow, the right material left alone.</p>
-    </section>
-
-    <figure class="image-band reveal" aria-label="Full-width interior room study">
-      <img src="assets/selected-room.png" alt="Dining room with a sculptural stair, linen curtains, oak table, and soft architectural light." loading="lazy" />
-      <figcaption>Garden dining room, private residence.</figcaption>
-    </figure>
-
-    <section class="section tight-top" id="rooms" aria-labelledby="rooms-title">
-      <div class="rooms-head reveal">
-        <h2 id="rooms-title">Rooms with a slower pulse.</h2>
-        <p>Each commission begins with atmosphere, then becomes architecture: openings, volumes, stone, timber, and the space between them.</p>
-      </div>
-      <div class="rooms-grid">
-        <figure class="room-card large reveal">
-          <img src="assets/interior-hero.png" alt="Quiet living room with linen curtains, low seating, stone floor, and dark timber storage." loading="lazy" />
-          <figcaption>Living room planned around morning shade and low conversation.</figcaption>
-        </figure>
-        <figure class="room-card detail reveal">
-          <img src="assets/material-detail.png" alt="Travertine, plaster, wood veneer, and linen held in warm side light." loading="lazy" />
-          <figcaption>Material register before procurement.</figcaption>
-        </figure>
-        <figure class="room-card portrait reveal">
-          <img src="assets/selected-room.png" alt="Warm dining area with timber chairs, curved stair, stone floor, and sheer drapery." loading="lazy" />
-          <figcaption>Dining volume edited for light, threshold, and proportion.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="section materials" id="materials" aria-labelledby="materials-title">
-      <div class="materials-image reveal">
-        <img src="assets/material-detail.png" alt="Close material composition of stone, plaster, linen, wood, and a dark ceramic bowl." loading="lazy" />
-      </div>
-      <div class="materials-copy reveal">
-        <p class="section-kicker">Material register</p>
-        <h2 id="materials-title">Selected for the way they age in light.</h2>
-        <p>Our palette is narrow by design. Stone, timber, plaster, linen, and shadow carry more depth than a room full of decorative gestures.</p>
-        <ul class="material-points" aria-label="Material priorities">
-          <li><strong>Stone</strong><span>Honed or brushed, with enough variation to keep the room alive.</span></li>
-          <li><strong>Timber</strong><span>Used as volume, threshold, and weight rather than surface ornament.</span></li>
-          <li><strong>Textile</strong><span>Linen, wool, and boucle selected for filtration, weight, and quiet touch.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="method" id="method" aria-labelledby="method-title">
-      <div class="method-inner">
-        <div class="reveal">
-          <h2 id="method-title">The work is mostly removal.</h2>
-          <p class="method-intro">Every commission is edited until the home can hold daily life without visual noise.</p>
-        </div>
-        <div class="method-grid">
-          <article class="method-item reveal">
-            <h3>Listen</h3>
-            <p>We map the rituals already in the home: morning routes, rooms that gather people, and corners that never quite work.</p>
-          </article>
-          <article class="method-item reveal">
-            <h3>Reduce</h3>
-            <p>Plans are narrowed to the decisions that change how the room feels: a moved wall, a corrected opening, a quieter palette.</p>
-          </article>
-          <article class="method-item reveal">
-            <h3>Place</h3>
-            <p>Furniture, stone, timber, and textiles are placed for touch, age, and proportion rather than novelty.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact" id="contact" aria-labelledby="contact-title">
-      <div class="contact-panel reveal">
-        <div class="contact-copy">
-          <h2 id="contact-title">Begin with the room that will not settle.</h2>
-          <p>Share the address, the rooms in scope, and what feels unresolved. We will reply with the right next conversation.</p>
-        </div>
-        <div class="contact-action">
-          <button class="solid-button" type="button" data-open-drawer>Inquire</button>
+      <div class="launcher-panel reveal">
+        <div class="screen-grid">
+          <a class="screen-card" href="home.html">
+            <span class="screen-thumb"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=700&q=82" alt="茶汤与茶叶的清爽画面" /></span>
+            <span class="screen-card-body"><strong>首页</strong><span>新品轮播、爆款饮品、品牌理念和活动入口。</span></span>
+          </a>
+          <a class="screen-card" href="menu.html">
+            <span class="screen-thumb"><img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=82" alt="清爽茶饮杯特写" /></span>
+            <span class="screen-card-body"><strong>饮品菜单</strong><span>分类筛选、饮品详情、甜度冰度与点单按钮。</span></span>
+          </a>
+          <a class="screen-card" href="stores.html">
+            <span class="screen-thumb"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=82" alt="明亮茶饮门店空间" /></span>
+            <span class="screen-card-body"><strong>门店查询</strong><span>城市筛选、门店列表、导航按钮和简易地图。</span></span>
+          </a>
+          <a class="screen-card" href="franchise.html">
+            <span class="screen-thumb"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=700&q=82" alt="原木色茶饮吧台" /></span>
+            <span class="screen-card-body"><strong>招商加盟</strong><span>优势、流程、政策和意向城市表单。</span></span>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <strong>Maison Arclay</strong>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="#rooms">Rooms</a>
-      <a href="#materials">Materials</a>
-      <a href="#method">Method</a>
-    </nav>
-    <span class="footer-note">Private residential interiors.</span>
-  </footer>
-
-  <div class="drawer-backdrop" data-close-drawer></div>
-  <aside class="drawer" aria-hidden="true" aria-labelledby="drawer-title" role="dialog" data-drawer>
-    <div class="drawer-header">
+    <div class="footer-grid">
       <div>
-        <h2 id="drawer-title">Private consultation</h2>
-        <p>Tell us what needs to change. The first reply will be practical and specific.</p>
+        <a class="brand-mark" href="index.html" aria-label="拾茶序官网入口">
+          <span class="brand-seal">拾</span>
+          <span class="brand-word"><strong>拾茶序</strong><span>新式茶饮</span></span>
+        </a>
+        <p class="soft-note">奶白、茶绿与原木浅棕构成全站视觉基底。</p>
       </div>
-      <button class="drawer-close" type="button" aria-label="Close consultation form" data-close-drawer>&times;</button>
+      <div class="footer-links">
+        <strong>快速访问</strong>
+        <a href="story.html">品牌故事</a>
+        <a href="stores.html">门店查询</a>
+        <a href="contact.html">合作咨询</a>
+      </div>
+      <div>
+        <div class="qr" aria-label="拾茶序公众号二维码"></div>
+        <p class="soft-note">关注公众号获取新品活动。</p>
+      </div>
     </div>
-    <form class="inquiry-form" novalidate data-inquiry-form>
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
-        <small data-error-for="name"></small>
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
-        <small data-error-for="email"></small>
-      </div>
-      <div class="field">
-        <label for="location">Project location</label>
-        <input id="location" name="location" autocomplete="street-address" placeholder="City or neighborhood" />
-        <small data-error-for="location"></small>
-      </div>
-      <div class="field">
-        <label for="scope">Rooms in scope</label>
-        <select id="scope" name="scope" required>
-          <option value="">Choose one</option>
-          <option>Primary residence</option>
-          <option>Apartment or pied-a-terre</option>
-          <option>Single room</option>
-          <option>Hospitality space</option>
-        </select>
-        <small data-error-for="scope"></small>
-      </div>
-      <div class="field">
-        <label for="message">What should change first?</label>
-        <textarea id="message" name="message" placeholder="Light, storage, proportion, atmosphere, material palette..." required></textarea>
-        <small data-error-for="message"></small>
-      </div>
-      <button class="solid-button" type="submit">Send inquiry</button>
-      <p class="form-status" aria-live="polite" data-form-status></p>
-    </form>
-  </aside>
-
+  </footer>
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
   <script>
-    (function () {
-      var body = document.body;
-      var header = document.querySelector("[data-header]");
-      var hero = document.querySelector(".hero");
-      var drawer = document.querySelector("[data-drawer]");
-      var openButtons = Array.prototype.slice.call(document.querySelectorAll("[data-open-drawer]"));
-      var closeButtons = Array.prototype.slice.call(document.querySelectorAll("[data-close-drawer]"));
-      var form = document.querySelector("[data-inquiry-form]");
-      var status = document.querySelector("[data-form-status]");
-      var lastFocus = null;
+(function () {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      function openDrawer() {
-        lastFocus = document.activeElement;
-        body.classList.add("drawer-open");
-        drawer.setAttribute("aria-hidden", "false");
-        var firstInput = drawer.querySelector("input, select, textarea, button");
-        if (firstInput) firstInput.focus({ preventScroll: true });
-      }
+  function getToast() {
+    let toast = document.querySelector("[data-toast]");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "toast";
+      toast.setAttribute("data-toast", "");
+      toast.setAttribute("role", "status");
+      toast.setAttribute("aria-live", "polite");
+      document.body.appendChild(toast);
+    }
+    return toast;
+  }
 
-      function closeDrawer() {
-        body.classList.remove("drawer-open");
-        drawer.setAttribute("aria-hidden", "true");
-        if (lastFocus && typeof lastFocus.focus === "function") {
-          lastFocus.focus({ preventScroll: true });
+  function showToast(message) {
+    const toast = getToast();
+    toast.textContent = message;
+    toast.classList.add("is-visible");
+    window.clearTimeout(showToast.timer);
+    showToast.timer = window.setTimeout(() => {
+      toast.classList.remove("is-visible");
+    }, 3200);
+  }
+
+  function initNav() {
+    const toggle = document.querySelector("[data-nav-toggle]");
+    const links = document.querySelector("[data-nav-links]");
+    if (!toggle || !links) return;
+
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      links.classList.toggle("is-open", !open);
+      document.body.classList.toggle("menu-open", !open);
+    });
+
+    links.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        toggle.setAttribute("aria-expanded", "false");
+        links.classList.remove("is-open");
+        document.body.classList.remove("menu-open");
+      });
+    });
+  }
+
+  function initReveal() {
+    const items = Array.from(document.querySelectorAll(".reveal"));
+    if (!items.length || reduceMotion || !("IntersectionObserver" in window)) {
+      items.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
         }
+      });
+    }, { threshold: 0.16 });
+
+    items.forEach((item) => io.observe(item));
+  }
+
+  function initCarousel() {
+    const carousels = document.querySelectorAll("[data-carousel]");
+    carousels.forEach((carousel) => {
+      const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
+      const prev = carousel.querySelector("[data-carousel-prev]");
+      const next = carousel.querySelector("[data-carousel-next]");
+      const label = carousel.querySelector("[data-carousel-count]");
+      let index = 0;
+      let timer = null;
+
+      function paint(nextIndex) {
+        index = (nextIndex + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("is-active", i === index);
+          slide.setAttribute("aria-hidden", String(i !== index));
+        });
+        if (label) label.textContent = `${index + 1} / ${slides.length}`;
       }
 
-      openButtons.forEach(function (button) {
-        button.addEventListener("click", openDrawer);
-      });
+      function start() {
+        if (reduceMotion || slides.length < 2) return;
+        timer = window.setInterval(() => paint(index + 1), 5200);
+      }
 
-      closeButtons.forEach(function (button) {
-        button.addEventListener("click", closeDrawer);
-      });
+      function stop() {
+        window.clearInterval(timer);
+      }
 
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape" && body.classList.contains("drawer-open")) {
-          closeDrawer();
+      if (!slides.length) return;
+      paint(0);
+      prev?.addEventListener("click", () => {
+        stop();
+        paint(index - 1);
+        start();
+      });
+      next?.addEventListener("click", () => {
+        stop();
+        paint(index + 1);
+        start();
+      });
+      carousel.addEventListener("mouseenter", stop);
+      carousel.addEventListener("mouseleave", start);
+      start();
+    });
+  }
+
+  const drinkDetails = {
+    "qingmei": {
+      title: "青梅竹影冷萃",
+      desc: "冷萃茉莉绿茶配青梅汁，入口清爽，尾调带轻微果酸。",
+      price: "¥19",
+      tags: ["少糖推荐", "季节限定"],
+      calories: "约 180 千卡",
+      ingredients: "茉莉绿茶、青梅汁、青梅果肉、轻乳泡",
+      sweetness: "无糖、三分糖、五分糖",
+      ice: "少冰、正常冰、去冰",
+      image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=82"
+    },
+    "mitao": {
+      title: "蜜桃乌龙云顶",
+      desc: "乌龙茶底搭配白桃果肉和轻奶盖，茶香明显，口感柔和。",
+      price: "¥21",
+      tags: ["少糖", "人气"],
+      calories: "约 230 千卡",
+      ingredients: "乌龙茶、白桃果酱、白桃果肉、轻奶盖",
+      sweetness: "三分糖、五分糖、七分糖",
+      ice: "少冰、正常冰",
+      image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=82"
+    },
+    "molicha": {
+      title: "茉莉轻乳茶",
+      desc: "清香茉莉茶底与鲜乳融合，适合日常通勤和午后补给。",
+      price: "¥16",
+      tags: ["低卡", "可热饮"],
+      calories: "约 160 千卡",
+      ingredients: "茉莉绿茶、鲜乳、轻乳泡",
+      sweetness: "无糖、三分糖、五分糖",
+      ice: "热饮、去冰、正常冰",
+      image: "https://images.unsplash.com/photo-1523906630133-f6934a1ab2b9?auto=format&fit=crop&w=900&q=82"
+    },
+    "shanzha": {
+      title: "山楂红茶小满",
+      desc: "红茶茶汤配山楂果味，酸甜平衡，适合作为餐后饮品。",
+      price: "¥18",
+      tags: ["鲜果茶", "轻负担"],
+      calories: "约 150 千卡",
+      ingredients: "红茶、山楂汁、柠檬片、果肉冻",
+      sweetness: "三分糖、五分糖",
+      ice: "少冰、正常冰",
+      image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=900&q=82"
+    },
+    "matcha": {
+      title: "青团抹茶拿铁",
+      desc: "抹茶拿铁配糯米小丸子，保留清明时节的轻国风记忆。",
+      price: "¥22",
+      tags: ["季节限定", "小食搭配"],
+      calories: "约 260 千卡",
+      ingredients: "抹茶、鲜乳、糯米小丸子、轻乳泡",
+      sweetness: "三分糖、五分糖、七分糖",
+      ice: "少冰、正常冰、热饮",
+      image: "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?auto=format&fit=crop&w=900&q=82"
+    },
+    "snack": {
+      title: "桂花米糕",
+      desc: "软糯米糕点缀桂花蜜，适合搭配纯茶或轻乳茶。",
+      price: "¥12",
+      tags: ["小食", "门店现蒸"],
+      calories: "约 190 千卡",
+      ingredients: "糯米、桂花蜜、少量椰乳",
+      sweetness: "固定甜度",
+      ice: "常温",
+      image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=82"
+    }
+  };
+
+  function initDrinkFilters() {
+    const bar = document.querySelector("[data-filter-bar]");
+    const cards = Array.from(document.querySelectorAll("[data-drink-card]"));
+    if (!bar || !cards.length) return;
+
+    bar.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      const filter = button.dataset.filter;
+      bar.querySelectorAll("[data-filter]").forEach((item) => {
+        item.setAttribute("aria-pressed", String(item === button));
+      });
+      cards.forEach((card) => {
+        const match = filter === "all" || card.dataset.category === filter;
+        card.classList.toggle("hidden", !match);
+      });
+    });
+  }
+
+  function initDrinkModal() {
+    const modal = document.querySelector("[data-drink-modal]");
+    if (!modal) return;
+    const close = modal.querySelector("[data-modal-close]");
+    const title = modal.querySelector("[data-modal-title]");
+    const desc = modal.querySelector("[data-modal-desc]");
+    const price = modal.querySelector("[data-modal-price]");
+    const tags = modal.querySelector("[data-modal-tags]");
+    const ingredients = modal.querySelector("[data-modal-ingredients]");
+    const calories = modal.querySelector("[data-modal-calories]");
+    const sweetness = modal.querySelector("[data-modal-sweetness]");
+    const ice = modal.querySelector("[data-modal-ice]");
+    const image = modal.querySelector("[data-modal-image]");
+
+    function openDrink(id) {
+      const item = drinkDetails[id];
+      if (!item) return;
+      title.textContent = item.title;
+      desc.textContent = item.desc;
+      price.textContent = item.price;
+      ingredients.textContent = item.ingredients;
+      calories.textContent = item.calories;
+      sweetness.textContent = item.sweetness;
+      ice.textContent = item.ice;
+      image.src = item.image;
+      image.alt = `${item.title} 饮品图`;
+      tags.innerHTML = item.tags.map((tag) => `<span class="tag">${tag}</span>`).join("");
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      close.focus();
+    }
+
+    function closeDrink() {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    document.querySelectorAll("[data-drink-open]").forEach((button) => {
+      button.addEventListener("click", () => openDrink(button.dataset.drinkOpen));
+    });
+
+    close.addEventListener("click", closeDrink);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeDrink();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("is-open")) closeDrink();
+    });
+  }
+
+  function initStoreFilter() {
+    const select = document.querySelector("[data-city-filter]");
+    const cards = Array.from(document.querySelectorAll("[data-store-card]"));
+    const pins = Array.from(document.querySelectorAll("[data-map-pin]"));
+    const label = document.querySelector("[data-map-label]");
+    if (!select || !cards.length) return;
+
+    function activeStore(card) {
+      cards.forEach((item) => item.classList.toggle("is-active", item === card));
+      pins.forEach((pin) => pin.classList.toggle("is-active", pin.dataset.store === card.dataset.store));
+      if (label) {
+        label.querySelector("strong").textContent = card.dataset.store;
+        label.querySelector("span").textContent = card.dataset.address;
+      }
+    }
+
+    function filterCity() {
+      const city = select.value;
+      let firstVisible = null;
+      cards.forEach((card) => {
+        const show = city === "all" || card.dataset.city === city;
+        card.classList.toggle("hidden", !show);
+        if (show && !firstVisible) firstVisible = card;
+      });
+      pins.forEach((pin) => {
+        pin.classList.toggle("hidden", city !== "all" && pin.dataset.city !== city);
+      });
+      if (firstVisible) activeStore(firstVisible);
+    }
+
+    select.addEventListener("change", filterCity);
+    cards.forEach((card) => {
+      card.addEventListener("mouseenter", () => activeStore(card));
+      card.addEventListener("focusin", () => activeStore(card));
+    });
+    pins.forEach((pin) => {
+      pin.addEventListener("click", () => {
+        const card = cards.find((item) => item.dataset.store === pin.dataset.store);
+        if (card) activeStore(card);
+      });
+    });
+    filterCity();
+  }
+
+  function initForms() {
+    document.querySelectorAll("[data-validate-form]").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        let valid = true;
+        const fields = Array.from(form.querySelectorAll("input, select, textarea"));
+        fields.forEach((field) => {
+          const wrapper = field.closest(".field");
+          const error = wrapper?.querySelector(".field-error");
+          let message = "";
+          const value = field.value.trim();
+          if (field.hasAttribute("required") && !value) {
+            message = "请填写此项";
+          } else if (field.type === "tel" && value && !/^1[3-9]\d{9}$/.test(value)) {
+            message = "请输入 11 位手机号";
+          } else if (field.type === "email" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            message = "请输入有效邮箱";
+          }
+          if (error) error.textContent = message;
+          field.setAttribute("aria-invalid", String(Boolean(message)));
+          if (message) valid = false;
+        });
+
+        if (!valid) {
+          showToast("请检查表单中标红的内容");
+          return;
         }
+
+        showToast(form.dataset.success || "已提交，工作人员会尽快联系你");
+        form.reset();
       });
+    });
+  }
 
-      if ("IntersectionObserver" in window && hero && header) {
-        var navObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            header.classList.toggle("is-solid", !entry.isIntersecting);
-          });
-        }, { threshold: 0.08 });
-        navObserver.observe(hero);
+  function initOrderLinks() {
+    document.querySelectorAll("[data-order-link]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        showToast("正在打开拾茶序线上点单小程序");
+      });
+    });
+  }
+
+  function initSocialLinks() {
+    document.querySelectorAll("[data-social-link]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        showToast(`正在打开拾茶序${link.dataset.socialLink}`);
+      });
+    });
+  }
+
+  function initImagePreview() {
+    const modal = document.querySelector("[data-image-modal]");
+    if (!modal) return;
+    const image = modal.querySelector("[data-preview-image]");
+    const close = modal.querySelector("[data-image-close]");
+    document.querySelectorAll("[data-preview-src]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        image.src = trigger.dataset.previewSrc;
+        image.alt = trigger.dataset.previewAlt || "放大预览图";
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        close.focus();
+      });
+    });
+    close.addEventListener("click", () => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    });
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
       }
+    });
+  }
 
-      if ("IntersectionObserver" in window) {
-        var revealObserver = new IntersectionObserver(function (entries, observer) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+  document.addEventListener("DOMContentLoaded", () => {
+    initNav();
+    initReveal();
+    initCarousel();
+    initDrinkFilters();
+    initDrinkModal();
+    initStoreFilter();
+    initForms();
+    initOrderLinks();
+    initSocialLinks();
+    initImagePreview();
+  });
+})();
 
-        document.querySelectorAll(".reveal").forEach(function (element) {
-          revealObserver.observe(element);
-        });
-      } else {
-        document.querySelectorAll(".reveal").forEach(function (element) {
-          element.classList.add("is-visible");
-        });
-      }
-
-      function setError(name, message) {
-        var target = form.querySelector("[data-error-for='" + name + "']");
-        if (target) target.textContent = message || "";
-      }
-
-      function validateEmail(value) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      }
-
-      if (form) {
-        form.addEventListener("submit", function (event) {
-          event.preventDefault();
-          var data = new FormData(form);
-          var name = String(data.get("name") || "").trim();
-          var email = String(data.get("email") || "").trim();
-          var scope = String(data.get("scope") || "").trim();
-          var message = String(data.get("message") || "").trim();
-          var hasError = false;
-
-          ["name", "email", "location", "scope", "message"].forEach(function (field) {
-            setError(field, "");
-          });
-
-          if (!name) {
-            setError("name", "Please add your name.");
-            hasError = true;
-          }
-
-          if (!email || !validateEmail(email)) {
-            setError("email", "Please enter a valid email.");
-            hasError = true;
-          }
-
-          if (!scope) {
-            setError("scope", "Please choose a project scope.");
-            hasError = true;
-          }
-
-          if (!message || message.length < 12) {
-            setError("message", "Please add a little more context.");
-            hasError = true;
-          }
-
-          if (hasError) {
-            status.textContent = "A few details need attention.";
-            return;
-          }
-
-          status.textContent = "Inquiry noted. We will reply with next steps.";
-          form.reset();
-        });
-      }
-    })();
-  </script>
+</script>
 </body>
 </html>
